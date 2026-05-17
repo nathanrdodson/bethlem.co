@@ -1,7 +1,8 @@
 COMPOSE = docker compose \
   -f docker-compose.yml \
   -f supabase/docker-compose.yml \
-  --env-file ../.env
+  --env-file ../.env \
+  --env-file supabase/.env
 
 .PHONY: up down restart logs ps pull build
 

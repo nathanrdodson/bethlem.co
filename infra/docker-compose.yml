@@ -17,7 +17,9 @@ volumes:
 services:
 
   # ── Nginx (reverse proxy) ──────────────────────────────────────────────────
+  # Only started in production: make up PROFILES=prod
   nginx:
+    profiles: [prod]
     image: nginx:1.27-alpine
     restart: unless-stopped
     ports:
@@ -35,6 +37,7 @@ services:
 
   # ── Next.js (main site + SSO endpoint) ────────────────────────────────────
   nextjs:
+    profiles: [prod]
     build:
       context: ..
       dockerfile: Dockerfile
@@ -51,12 +54,13 @@ services:
       - proxy
       - app
     depends_on:
-      supabase-kong:
+      kong:
         condition: service_healthy
 
   # ── Discourse (forum) ──────────────────────────────────────────────────────
   discourse:
-    image: bitnami/discourse:3
+    profiles: [prod]
+    image: bitnami/discourse:latest
     restart: unless-stopped
     environment:
       DISCOURSE_HOSTNAME: forum.bethlem.co
@@ -101,6 +105,7 @@ services:
       start_period: 300s  # Discourse asset precompilation takes ~5 min on first boot
 
   discourse-postgres:
+    profiles: [prod]
     image: bitnami/postgresql:16
     restart: unless-stopped
     environment:
@@ -113,6 +118,7 @@ services:
       - discourse_internal
 
   discourse-redis:
+    profiles: [prod]
     image: bitnami/redis:7.4
     restart: unless-stopped
     environment:
