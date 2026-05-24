@@ -1,40 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogCard from '../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+type Post = CollectionEntry<'blog'>;
+const allPosts = await getCollection('blog', ({ data }: Post) => !data.draft);
+allPosts.sort((a: Post, b: Post) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const latest = allPosts.slice(0, 3);
 ---
 
 <BaseLayout
-  title="Blog"
-  description="Stories, updates, and honest accounts of living with Bethlem myopathy."
+  title="Home"
+  description="Bethlem.co"
 >
-  <div class="px-5 md:px-8 py-12 md:py-20 max-w-5xl mx-auto">
-    <header class="mb-12">
-      <h1 class="font-serif text-3xl md:text-5xl font-bold text-navy leading-tight mb-4">
-        The blog
+  <!-- Hero: full-bleed navy -->
+  <section class="bg-navy px-6 md:px-10 py-24 md:py-36">
+    <div class="max-w-3xl mx-auto text-center">
+      <img
+        src="/brand/bethlem-mark-white.svg"
+        alt=""
+        aria-hidden="true"
+        class="w-14 h-auto mx-auto mb-10 opacity-80"
+      />
+      <h1 class="font-serif text-4xl md:text-6xl font-bold text-cream leading-tight mb-6">
+        Bethlem.co
       </h1>
-      <p class="text-base md:text-lg text-gray font-sans max-w-xl leading-relaxed">
-        Written like letters — honest, personal, and meant to be read slowly.
+      <p class="text-cream/60 font-sans text-lg leading-relaxed max-w-xl mx-auto mb-10">
+        Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam.
       </p>
-    </header>
+      <a
+        href="/writing"
+        class="inline-block bg-coral text-cream font-sans font-semibold text-sm px-8 py-3.5 rounded hover:bg-coral/90 transition-colors"
+      >
+        Read the blog
+      </a>
+    </div>
+  </section>
 
-    {allPosts.length === 0 ? (
-      <p class="text-gray font-sans">No posts yet — check back soon.</p>
-    ) : (
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {allPosts.map((post) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            slug={post.slug}
-            pubDate={post.data.pubDate}
-            tags={post.data.tags}
-          />
-        ))}
+  <!-- Intro: cream -->
+  <section class="bg-cream px-6 md:px-10 py-20 md:py-28">
+    <div class="max-w-3xl mx-auto grid md:grid-cols-2 gap-16 items-start">
+      <div>
+        <img src="/brand/bethlem-mark-coral.svg" alt="" aria-hidden="true" class="w-8 h-auto mb-6" />
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-navy mb-4 leading-snug">
+          Sed ut perspiciatis unde omnis
+        </h2>
+        <p class="text-charcoal font-sans text-base leading-[1.8] mb-4">
+          Iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam
+          eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae.
+        </p>
+        <p class="text-charcoal font-sans text-base leading-[1.8]">
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+          sed quia consequuntur magni dolores.
+        </p>
       </div>
-    )}
-  </div>
+      <div class="border-l border-border-light pl-10 md:pt-14">
+        <blockquote class="font-serif text-xl font-bold text-navy leading-snug mb-4">
+          "At vero eos et accusamus et iusto odio dignissimos ducimus."
+        </blockquote>
+        <p class="text-sm text-gray font-sans">Lorem Ipsum, De Finibus</p>
+        <a href="/about" class="inline-block mt-8 text-coral font-semibold font-sans text-sm hover:underline">
+          About this site →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest posts -->
+  {latest.length > 0 && (
+    <section class="bg-coral-tint border-t border-coral-border px-6 md:px-10 py-16 md:py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif text-sm font-bold text-coral tracking-widest uppercase mb-8">
+          Latest
+        </h2>
+        <ul class="divide-y divide-coral-border">
+          {latest.map((post) => (
+            <li class="py-6">
+              <a href={`/writing/${post.slug}`} class="group flex items-baseline justify-between gap-6">
+                <span class="font-serif text-lg font-bold text-navy group-hover:text-coral transition-colors leading-snug">
+                  {post.data.title}
+                </span>
+                <span class="text-xs text-gray font-sans whitespace-nowrap shrink-0">
+                  {new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(post.data.pubDate)}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-8">
+          <a href="/writing" class="text-coral font-semibold font-sans text-sm hover:underline">
+            All posts →
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
 </BaseLayout>

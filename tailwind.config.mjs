@@ -22,7 +22,7 @@ export default {
       },
       fontFamily: {
         serif: ['Lora', 'Georgia', 'serif'],
-        sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
       },
       lineHeight: {
         reading: '1.8',

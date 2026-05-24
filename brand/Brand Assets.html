@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bethlem — Brand Assets</title>
+  <link rel="icon" href="brand/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #042C53;
+      --coral:  #D85A30;
+      --tint:   #FAECE7;
+      --bg:     #F5F3EE;
+      --border: #D8D5CC;
+      --muted:  #5F5E5A;
+      --white:  #FFFFFF;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--navy);
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    nav {
+      background: var(--navy);
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 26px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-left: 12px;
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ── Page ────────────────────────────────────────── */
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 52px 40px 96px;
+    }
+
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 8px;
+    }
+
+    .page-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .page-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .page-note strong { color: var(--navy); font-weight: 600; }
+
+    /* ── Sections ────────────────────────────────────── */
+    .section {
+      margin-top: 52px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .grid-wide {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 10px;
+    }
+
+    /* ── Asset card ──────────────────────────────────── */
+    .asset-card {
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .asset-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 24px;
+      min-height: 110px;
+      flex: 1;
+    }
+
+    .asset-preview img {
+      max-width: 100%;
+      max-height: 80px;
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    .asset-preview.dark  { background: var(--navy); }
+    .asset-preview.light { background: var(--bg); }
+    .asset-preview.white { background: var(--white); }
+    .asset-preview.checker {
+      background-image:
+        linear-gradient(45deg, #e8e5de 25%, transparent 25%),
+        linear-gradient(-45deg, #e8e5de 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e8e5de 75%),
+        linear-gradient(-45deg, transparent 75%, #e8e5de 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+      background-color: var(--white);
+    }
+
+    .asset-footer {
+      padding: 10px 16px 12px;
+      border-top: 0.5px solid #ECEAE3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .asset-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .asset-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--tint);
+      color: var(--coral);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .dl-btn:hover { background: #F5D8CC; }
+
+    .dl-btn svg { flex-shrink: 0; }
+
+    /* ── Icon grid (bigger previews) ─────────────────── */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+
+    .icon-preview {
+      min-height: 140px;
+    }
+
+    .icon-preview img {
+      max-height: 100px;
+      max-width: 100px;
+      border-radius: 18px;
+    }
+
+    /* ── Favicon row ─────────────────────────────────── */
+    .fav-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .fav-row img {
+      display: block;
+      border-radius: 3px;
+    }
+
+    /* ── Usage note ──────────────────────────────────── */
+    .note-box {
+      margin-top: 44px;
+      background: var(--tint);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .note-box-icon {
+      color: var(--coral);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .note-box p {
+      font-size: 13px;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    .note-box strong { font-weight: 600; }
+
+    /* ── DL arrow icon ───────────────────────────────── */
+    .arr { display: inline-block; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="brand/bethlem-logo-dark.svg" alt="Bethlem"/>
+    <span class="nav-tag">Brand Assets</span>
+  </a>
+</nav>
+
+<!-- Page -->
+<main class="page">
+
+  <p class="page-eyebrow">Bethlem — Brand Kit</p>
+  <h1 class="page-title">Logo &amp; Mark Assets</h1>
+  <p class="page-note">
+    Production-ready SVG files for all logo variants.
+    <strong>The Taper mark</strong> — four spindle-shaped muscle fibers,
+    tilted forward at 16°, representing the biological form and forward motion
+    of Bethlem myopathy. All files are scalable to any size.
+    Text is live (not outlined) — for print or offline use,
+    open in Inkscape / Illustrator and convert text to paths.
+  </p>
+
+  <!-- ── Mark ──────────────────────────────────────────────────── -->
+  <div class="section">
+    <p class="section-title">Mark</p>
+    <div class="grid">
+
+      <div class="asset-card">
+        <div class="asset-preview light">
+          <img src="brand/bethlem-mark-coral.svg" alt="Mark coral"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Mark — coral</div>
+            <div class="asset-meta">Use on light backgrounds</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-mark-coral.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview dark">
+          <img src="brand/bethlem-mark-white.svg" alt="Mark white"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Mark — white</div>
+            <div class="asset-meta">Use on dark backgrounds</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-mark-white.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview checker">
+          <img src="brand/bethlem-mark-navy.svg" alt="Mark navy"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Mark — navy</div>
+            <div class="asset-meta">Single-colour print</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-mark-navy.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Horizontal lockup ─────────────────────────────────────── -->
+  <div class="section">
+    <p class="section-title">Logo — Horizontal lockup</p>
+    <div class="grid-wide">
+
+      <div class="asset-card">
+        <div class="asset-preview light" style="min-height:90px">
+          <img src="brand/bethlem-logo-light.svg" alt="Logo light" style="max-height:44px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Logo — full colour</div>
+            <div class="asset-meta">Coral mark · navy wordmark</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-logo-light.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview dark" style="min-height:90px">
+          <img src="brand/bethlem-logo-dark.svg" alt="Logo dark" style="max-height:44px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Logo — reversed</div>
+            <div class="asset-meta">White mark · white wordmark</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-logo-dark.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview light" style="min-height:90px">
+          <img src="brand/bethlem-logo-mono-navy.svg" alt="Logo mono navy" style="max-height:44px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Logo — mono navy</div>
+            <div class="asset-meta">Single-colour, light bg</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-logo-mono-navy.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview white" style="min-height:90px">
+          <img src="brand/bethlem-logo-mono-coral.svg" alt="Logo mono coral" style="max-height:44px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Logo — mono coral</div>
+            <div class="asset-meta">Single-colour accent use</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-logo-mono-coral.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Stacked + wordmark ─────────────────────────────────────── -->
+  <div class="section">
+    <p class="section-title">Logo — Stacked &amp; Wordmark</p>
+    <div class="grid">
+
+      <div class="asset-card">
+        <div class="asset-preview light" style="min-height:130px">
+          <img src="brand/bethlem-logo-stacked.svg" alt="Logo stacked" style="max-height:90px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Logo — stacked</div>
+            <div class="asset-meta">Mark above wordmark</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-logo-stacked.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview light" style="min-height:130px">
+          <img src="brand/bethlem-wordmark-navy.svg" alt="Wordmark navy" style="max-height:44px"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Wordmark — navy</div>
+            <div class="asset-meta">Text only, no mark</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-wordmark-navy.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── App icons ──────────────────────────────────────────────── -->
+  <div class="section">
+    <p class="section-title">App Icons &amp; Favicon</p>
+    <div class="icon-grid">
+
+      <div class="asset-card">
+        <div class="asset-preview checker icon-preview">
+          <img src="brand/bethlem-icon-navy.svg" alt="Icon navy"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Icon — navy</div>
+            <div class="asset-meta">512 × 512</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-icon-navy.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview checker icon-preview">
+          <img src="brand/bethlem-icon-coral.svg" alt="Icon coral"/>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Icon — coral</div>
+            <div class="asset-meta">512 × 512</div>
+          </div>
+          <a class="dl-btn" href="brand/bethlem-icon-coral.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+      <div class="asset-card">
+        <div class="asset-preview checker icon-preview">
+          <div class="fav-row">
+            <img src="brand/favicon.svg" width="48" height="48" alt="Favicon 48px"/>
+            <img src="brand/favicon.svg" width="32" height="32" alt="Favicon 32px"/>
+            <img src="brand/favicon.svg" width="16" height="16" alt="Favicon 16px"/>
+          </div>
+        </div>
+        <div class="asset-footer">
+          <div>
+            <div class="asset-name">Favicon</div>
+            <div class="asset-meta">B lettermark — navy + coral</div>
+          </div>
+          <a class="dl-btn" href="brand/favicon.svg" download>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v6M2.5 5l3 3 3-3M1 10h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            SVG
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Usage note ──────────────────────────────────────────────── -->
+  <div class="note-box">
+    <svg class="note-box-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="8" cy="5" r="0.75" fill="currentColor"/>
+    </svg>
+    <p>
+      <strong>Converting to outlines.</strong> Wordmark text uses Lora Bold 700 (Google Fonts).
+      For print, PDF, or any offline context, open the SVG in Inkscape or Illustrator
+      and use <em>Text → Convert to Paths</em> (Inkscape) or <em>Type → Create Outlines</em> (Illustrator)
+      before exporting. This embeds the letterforms permanently and removes the font dependency.
+    </p>
+  </div>
+
+</main>
+</body>
+</html>

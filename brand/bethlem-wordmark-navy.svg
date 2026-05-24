@@ -1,7 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 138 32">
   <title>Bethlem wordmark — navy</title>
-  <defs>
-    
-  </defs>
-  <text x="0" y="20" class="wm" font-size="36" fill="#042C53" dominant-baseline="middle">Bethlem</text>
+  <text x="0" y="16" font-family="Lora,Georgia,serif" font-size="28" font-weight="700" fill="#042C53" dominant-baseline="middle" letter-spacing="0.02em">Bethlem</text>
 </svg>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Tag from '../components/Tag.astro';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
@@ -8,83 +9,120 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   tags?: string[];
+  currentSlug: string;
 }
 
-const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
+const { title, description, pubDate, updatedDate, tags = [], currentSlug } = Astro.props;
 
-const formatted = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}).format(pubDate);
+type Post = import('astro:content').CollectionEntry<'blog'>;
+const allPosts = await getCollection('blog', ({ data }: Post) => !data.draft);
+allPosts.sort((a: Post, b: Post) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const updatedFormatted = updatedDate
-  ? new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(updatedDate)
-  : null;
+const fmt = (d: Date) => new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d);
+const fmtFull = (d: Date) => new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(d);
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="px-5 py-12 md:py-20">
-    <!-- Header -->
-    <header class="max-w-prose mx-auto mb-10 md:mb-14">
-      {tags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mb-5">
-          {tags.map((tag) => <Tag label={tag} />)}
-        </div>
-      )}
+  <div class="flex min-h-[calc(100vh-4rem)]">
 
-      <h1 class="font-serif text-3xl md:text-5xl font-bold text-navy leading-tight md:leading-tight mb-5">
-        {title}
-      </h1>
-
-      <p class="text-base text-gray leading-relaxed mb-6 font-sans">{description}</p>
-
-      <div class="flex items-center gap-3 border-t border-border-light pt-5">
-        <time datetime={pubDate.toISOString()} class="text-sm text-gray font-sans">
-          {formatted}
-        </time>
-        {updatedFormatted && (
-          <span class="text-sm text-gray font-sans">· Updated {updatedFormatted}</span>
-        )}
+    <!-- Sidebar -->
+    <aside class="hidden md:flex flex-col w-56 shrink-0 border-r border-border-light bg-cream sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+      <div class="px-5 pt-8 pb-6">
+        <p class="text-xs font-sans font-medium text-gray uppercase tracking-widest mb-5">Writing</p>
+        <nav>
+          <ul class="space-y-1">
+            {allPosts.map((post) => {
+              const active = post.slug === currentSlug;
+              return (
+                <li>
+                  <a
+                    href={`/writing/${post.slug}`}
+                    class={`group flex flex-col py-2.5 px-3 rounded transition-colors ${active ? 'bg-coral/10 text-coral' : 'text-charcoal hover:bg-border-light hover:text-navy'}`}
+                  >
+                    <span class={`font-sans text-sm leading-snug ${active ? 'font-semibold' : 'font-normal'}`}>
+                      {post.data.title}
+                    </span>
+                    <span class="text-xs text-gray mt-0.5">{fmt(post.data.pubDate)}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
-    </header>
+    </aside>
 
-    <!-- Divider mark -->
-    <div class="max-w-prose mx-auto mb-10 md:mb-14 flex justify-start">
-      <svg viewBox="0 0 52 56" width="28" height="32" aria-hidden="true">
-        <line x1="0" y1="9" x2="32" y2="9" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
-        <line x1="4" y1="20" x2="44" y2="20" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
-        <line x1="2" y1="31" x2="36" y2="31" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
-        <line x1="0" y1="42" x2="24" y2="42" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
-      </svg>
+    <!-- Mobile: post list toggle -->
+    <div class="md:hidden border-b border-border-light bg-cream sticky top-16 z-10 w-full">
+      <details class="group">
+        <summary class="flex items-center justify-between px-5 py-3 text-sm font-sans font-medium text-charcoal cursor-pointer list-none">
+          <span>All writing</span>
+          <svg class="w-4 h-4 text-gray group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <nav class="border-t border-border-light px-5 pb-3">
+          <ul class="divide-y divide-border-light">
+            {allPosts.map((post) => {
+              const active = post.slug === currentSlug;
+              return (
+                <li>
+                  <a
+                    href={`/writing/${post.slug}`}
+                    class={`flex items-center justify-between py-2.5 font-sans text-sm ${active ? 'text-coral font-semibold' : 'text-charcoal'}`}
+                  >
+                    <span>{post.data.title}</span>
+                    <span class="text-xs text-gray">{fmt(post.data.pubDate)}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </details>
     </div>
 
-    <!-- Body -->
-    <div class="
-      drop-cap
-      max-w-prose mx-auto
-      font-sans text-[1.0625rem] text-charcoal leading-[1.8]
-      prose-headings:font-serif prose-headings:text-navy prose-headings:font-bold
-      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
-      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-      prose-a:text-coral prose-a:underline prose-a:font-semibold
-      prose-blockquote:border-l-4 prose-blockquote:border-coral prose-blockquote:pl-5 prose-blockquote:italic prose-blockquote:text-navy
-      prose-hr:border-border-light prose-hr:my-10
-      prose-strong:text-charcoal prose-strong:font-semibold
-      [&>p]:mb-6 [&>h2]:mt-12 [&>h3]:mt-8 [&>ul]:mb-6 [&>ol]:mb-6
-      [&>ul]:list-disc [&>ul]:pl-6 [&>ul>li]:mb-2
-      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol>li]:mb-2
-      [&>hr]:my-10 [&>hr]:border-border-light
-      [&>blockquote]:my-8 [&>blockquote]:border-l-4 [&>blockquote]:border-coral [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-navy
-    ">
-      <slot />
-    </div>
+    <!-- Main content -->
+    <article class="flex-1 min-w-0 px-6 md:px-12 py-12 md:py-16">
+      <header class="max-w-prose mb-10 md:mb-12">
+        {tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-5">
+            {tags.map((tag) => <Tag label={tag} />)}
+          </div>
+        )}
 
-    <!-- Footer nav -->
-    <div class="max-w-prose mx-auto mt-16 pt-8 border-t border-border-light">
-      <a href="/blog" class="text-coral font-semibold font-sans text-sm hover:underline">
-        ← All posts
-      </a>
-    </div>
-  </article>
+        <h1 class="font-serif text-3xl md:text-4xl font-bold text-navy leading-tight mb-4">
+          {title}
+        </h1>
+
+        <p class="text-base text-gray leading-relaxed mb-5 font-sans">{description}</p>
+
+        <time datetime={pubDate.toISOString()} class="text-sm text-gray font-sans">
+          {fmtFull(pubDate)}
+        </time>
+        {updatedDate && (
+          <span class="text-sm text-gray font-sans"> · Updated {fmtFull(updatedDate)}</span>
+        )}
+      </header>
+
+      <div class="max-w-prose mb-10">
+        <img src="/brand/bethlem-mark-coral.svg" alt="" aria-hidden="true" class="w-7 h-auto" />
+      </div>
+
+      <div class="
+        drop-cap max-w-prose
+        font-sans text-[1.0625rem] text-charcoal leading-[1.8]
+        [&>p]:mb-6
+        [&>h2]:font-serif [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-navy [&>h2]:mt-12 [&>h2]:mb-4
+        [&>h3]:font-serif [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-navy [&>h3]:mt-8 [&>h3]:mb-3
+        [&>a]:text-coral [&>a]:underline [&>a]:font-semibold
+        [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>ul>li]:mb-2
+        [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:mb-6 [&>ol>li]:mb-2
+        [&>hr]:my-10 [&>hr]:border-border-light
+        [&>blockquote]:my-8 [&>blockquote]:border-l-4 [&>blockquote]:border-coral [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-navy
+        [&>strong]:text-charcoal [&>strong]:font-semibold
+      ">
+        <slot />
+      </div>
+    </article>
+
+  </div>
 </BaseLayout>

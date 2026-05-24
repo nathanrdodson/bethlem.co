@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228 56">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 56">
   <title>Bethlem logo — mono navy</title>
-  <defs>
-    
-  </defs>
-  <line x1="7" y1="10" x2="34" y2="10" stroke="#042C53" stroke-width="4" stroke-linecap="round"></line>
-  <line x1="2" y1="22" x2="48" y2="22" stroke="#042C53" stroke-width="4" stroke-linecap="round"></line>
-  <line x1="10" y1="34" x2="42" y2="34" stroke="#042C53" stroke-width="4" stroke-linecap="round"></line>
-  <line x1="4" y1="46" x2="36" y2="46" stroke="#042C53" stroke-width="4" stroke-linecap="round"></line>
-  <text x="65" y="28" class="wm" font-size="38" fill="#042C53" dominant-baseline="middle">Bethlem</text>
+  
+  <g transform="rotate(-16, 28, 28)">
+  <path d="M10,12 C24,8.5 24,8.5 38,12 C24,15.5 24,15.5 10,12Z" fill="#042C53" opacity="0.40"></path>
+  <path d="M3,23 C28,16.5 28,16.5 53,23 C28,29.5 28,29.5 3,23Z" fill="#042C53" opacity="1"></path>
+  <path d="M8,34 C27,29 27,29 46,34 C27,39 27,39 8,34Z" fill="#042C53" opacity="0.70"></path>
+  <path d="M6,45 C23,41.5 23,41.5 40,45 C23,48.5 23,48.5 6,45Z" fill="#042C53" opacity="0.45"></path>
+  </g>
+  <text x="72" y="28" font-family="Lora,Georgia,serif" font-size="28" font-weight="700" fill="#042C53" dominant-baseline="middle" letter-spacing="0.02em">Bethlem</text>
 </svg>

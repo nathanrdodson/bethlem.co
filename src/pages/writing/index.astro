@@ -1,0 +1,10 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+type Post = CollectionEntry<'blog'>;
+const allPosts = await getCollection('blog', ({ data }: Post) => !data.draft);
+allPosts.sort((a: Post, b: Post) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const latest = allPosts[0];
+if (latest) return Astro.redirect(`/writing/${latest.slug}`);
+---

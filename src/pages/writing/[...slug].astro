@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
@@ -10,6 +10,7 @@ export async function getStaticPaths() {
   }));
 }
 
+interface Props { post: CollectionEntry<'blog'>; }
 const { post } = Astro.props;
 const { Content } = await post.render();
 ---
@@ -20,6 +21,7 @@ const { Content } = await post.render();
   pubDate={post.data.pubDate}
   updatedDate={post.data.updatedDate}
   tags={post.data.tags}
+  currentSlug={post.slug}
 >
   <Content />
 </PostLayout>
