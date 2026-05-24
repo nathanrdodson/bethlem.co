@@ -1,0 +1,21 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+
+const styles: Record<string, string> = {
+  Blog: 'bg-[#E6F1FB] text-[#185FA5]',
+  Resources: 'bg-[#EAF3DE] text-[#3B6D11]',
+  Community: 'bg-[#F1EFE8] text-[#5F5E5A]',
+  Forum: 'bg-[#FAECE7] text-[#993C1D]',
+  Research: 'bg-navy text-white',
+};
+
+const cls = styles[label] ?? 'bg-[#F1EFE8] text-[#5F5E5A]';
+---
+
+<span class={`inline-block text-xs font-semibold font-sans px-3.5 py-1 rounded-full ${cls}`}>
+  {label}
+</span>

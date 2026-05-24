@@ -1,0 +1,45 @@
+---
+import Tag from './Tag.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  pubDate: Date;
+  tags?: string[];
+}
+
+const { title, description, slug, pubDate, tags = [] } = Astro.props;
+
+const formatted = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+}).format(pubDate);
+---
+
+<article class="bg-white border border-border/50 rounded-xl p-6 flex flex-col gap-3 hover:shadow-sm transition-shadow">
+  {tags.length > 0 && (
+    <div class="flex flex-wrap gap-2">
+      {tags.map((tag) => <Tag label={tag} />)}
+    </div>
+  )}
+
+  <h2 class="font-serif text-xl font-bold text-navy leading-snug">
+    <a href={`/blog/${slug}`} class="hover:text-coral transition-colors">
+      {title}
+    </a>
+  </h2>
+
+  <p class="text-sm text-gray leading-relaxed font-sans flex-1">{description}</p>
+
+  <div class="flex items-center justify-between pt-3 border-t border-border-light mt-auto">
+    <time class="text-xs text-gray font-sans">{formatted}</time>
+    <a
+      href={`/blog/${slug}`}
+      class="text-sm font-semibold text-coral font-sans hover:underline min-h-[44px] flex items-center"
+    >
+      Read more →
+    </a>
+  </div>
+</article>

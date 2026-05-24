@@ -1,0 +1,90 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Tag from '../components/Tag.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+}
+
+const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
+
+const formatted = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+
+const updatedFormatted = updatedDate
+  ? new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(updatedDate)
+  : null;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="px-5 py-12 md:py-20">
+    <!-- Header -->
+    <header class="max-w-prose mx-auto mb-10 md:mb-14">
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-5">
+          {tags.map((tag) => <Tag label={tag} />)}
+        </div>
+      )}
+
+      <h1 class="font-serif text-3xl md:text-5xl font-bold text-navy leading-tight md:leading-tight mb-5">
+        {title}
+      </h1>
+
+      <p class="text-base text-gray leading-relaxed mb-6 font-sans">{description}</p>
+
+      <div class="flex items-center gap-3 border-t border-border-light pt-5">
+        <time datetime={pubDate.toISOString()} class="text-sm text-gray font-sans">
+          {formatted}
+        </time>
+        {updatedFormatted && (
+          <span class="text-sm text-gray font-sans">· Updated {updatedFormatted}</span>
+        )}
+      </div>
+    </header>
+
+    <!-- Divider mark -->
+    <div class="max-w-prose mx-auto mb-10 md:mb-14 flex justify-start">
+      <svg viewBox="0 0 52 56" width="28" height="32" aria-hidden="true">
+        <line x1="0" y1="9" x2="32" y2="9" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
+        <line x1="4" y1="20" x2="44" y2="20" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2" y1="31" x2="36" y2="31" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
+        <line x1="0" y1="42" x2="24" y2="42" stroke="#D85A30" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Body -->
+    <div class="
+      drop-cap
+      max-w-prose mx-auto
+      font-sans text-[1.0625rem] text-charcoal leading-[1.8]
+      prose-headings:font-serif prose-headings:text-navy prose-headings:font-bold
+      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-a:text-coral prose-a:underline prose-a:font-semibold
+      prose-blockquote:border-l-4 prose-blockquote:border-coral prose-blockquote:pl-5 prose-blockquote:italic prose-blockquote:text-navy
+      prose-hr:border-border-light prose-hr:my-10
+      prose-strong:text-charcoal prose-strong:font-semibold
+      [&>p]:mb-6 [&>h2]:mt-12 [&>h3]:mt-8 [&>ul]:mb-6 [&>ol]:mb-6
+      [&>ul]:list-disc [&>ul]:pl-6 [&>ul>li]:mb-2
+      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol>li]:mb-2
+      [&>hr]:my-10 [&>hr]:border-border-light
+      [&>blockquote]:my-8 [&>blockquote]:border-l-4 [&>blockquote]:border-coral [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-navy
+    ">
+      <slot />
+    </div>
+
+    <!-- Footer nav -->
+    <div class="max-w-prose mx-auto mt-16 pt-8 border-t border-border-light">
+      <a href="/blog" class="text-coral font-semibold font-sans text-sm hover:underline">
+        ← All posts
+      </a>
+    </div>
+  </article>
+</BaseLayout>
