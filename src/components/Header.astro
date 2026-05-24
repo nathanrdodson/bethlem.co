@@ -1,6 +1,6 @@
 ---
 const navLinks = [
-  { label: 'Blog', href: '/blog' },
+  { label: 'Blog', href: '/' },
   { label: 'About', href: '/about' },
 ];
 
@@ -26,7 +26,7 @@ const pathname = Astro.url.pathname;
         <a
           href={href}
           class={`px-4 py-2 rounded-md text-sm font-semibold font-sans transition-colors min-h-[44px] flex items-center ${
-            pathname.startsWith(href)
+            (href === '/' ? pathname === '/' : pathname.startsWith(href))
               ? 'text-navy bg-border-light'
               : 'text-charcoal hover:text-navy hover:bg-border-light'
           }`}
@@ -56,7 +56,7 @@ const pathname = Astro.url.pathname;
       <a
         href={href}
         class={`px-2 py-3 text-base font-semibold font-sans border-b border-border-light last:border-0 min-h-[44px] flex items-center ${
-          pathname.startsWith(href) ? 'text-coral' : 'text-charcoal hover:text-coral'
+          (href === '/' ? pathname === '/' : pathname.startsWith(href)) ? 'text-coral' : 'text-charcoal hover:text-coral'
         }`}
       >
         {label}
